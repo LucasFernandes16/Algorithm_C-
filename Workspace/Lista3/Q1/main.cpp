@@ -22,7 +22,7 @@ class Dictionary{
     int hashK(string k){
       int s = k.length();
       int sum = 0;  
-      for(int i = 0; i < s-1; i++){
+      for(int i = 0; i < s; i++){
         sum = sum + k[i]*(i+1);
       }
       sum = 19*sum;
@@ -30,13 +30,7 @@ class Dictionary{
     }
 
     int hashF(string k){
-      int s = k.length();
-      int sum = 0;  
-      for(int i = 0; i < s-1; i++){
-        sum = sum + k[i]*(i+1);
-      }
-      sum = 19*sum;
-      return sum%101;
+      return hashK(k)%101;
     }
 
     void create_dict(int size){
@@ -50,7 +44,7 @@ class Dictionary{
       cnt = 0;
     }
   public:
-    Dictionary(){create_dict(20);}
+    Dictionary(){create_dict(101);}
     ~Dictionary(){clear();}
 
     E find(string K){
@@ -100,7 +94,7 @@ class Dictionary{
           int i= 0;
           do{
             i = i+1;
-            int offset = (hashF(k)+(i*i)+23*i)%101;
+            int offset = (hashF(e)+(i*i)+23*i)%101;
             newPos = offset;
           }while(not(H[newPos].element == "" or H[newPos].element == "deleted"));
           pos = newPos;
@@ -132,3 +126,17 @@ class Dictionary{
            }
         }
 };
+
+int main(){
+  Dictionary<int,string> lucas;
+  lucas.insert("marsz");
+  lucas.insert("Dabrowski");
+  lucas.insert("z");
+  lucas.insert("ziemii");
+  lucas.insert("Polski");
+  lucas.insert("Polski");
+  lucas.insert("wloskiej");
+  lucas.insert("do");
+  lucas.print();
+  return 0;
+}
