@@ -1,3 +1,21 @@
 {
-  "cmake.configureOnOpen": false
+  "cmake.configureOnOpen": false,
+  "files.associations": {
+    ".env.*": "dotenv",
+    ".prettierrc": "Wjson",
+    "*.css": "css",
+    "list": "cpp",
+    "tuple": "cpp",
+    "array": "cpp",
+    "deque": "cpp",
+    "string": "cpp",
+    "unordered_map": "cpp",
+    "vector": "cpp",
+    "string_view": "cpp",
+    "format": "cpp",
+    "initializer_list": "cpp",
+    "span": "cpp",
+    "text_encoding": "cpp",
+    "random": "cpp"
+  }
 }
