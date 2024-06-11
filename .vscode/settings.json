@@ -1,0 +1,8 @@
+{
+  "files.associations": {
+    ".env.*": "dotenv",
+    ".prettierrc": "Wjson",
+    "*.css": "css",
+    "iostream": "cpp"
+  }
+}

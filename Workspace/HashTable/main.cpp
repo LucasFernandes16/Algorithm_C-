@@ -41,7 +41,7 @@ class Dictionary{
                     break;
                 }
             }
-            return -1;
+            return NULL;
         }
 
     public:
