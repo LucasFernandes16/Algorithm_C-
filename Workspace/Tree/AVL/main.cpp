@@ -24,7 +24,8 @@ class BST{
       root = NULL;
       nodecount = 0;
     }
-    void clear_bst(){
+    void clear_bst(BSTNODE<Key,E>* rt){
+      delete rt;
       nodecount = 0;
     }
 
@@ -120,7 +121,7 @@ class BST{
 
   public:
     BST(){create_bst();}
-    ~BST(){clear_bst();}
+    ~BST(){clear_bst(root);}
 
     void insert(Key k, E e){
       root = inserthelp(root, k, e);
