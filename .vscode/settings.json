@@ -3,6 +3,7 @@
     ".env.*": "dotenv",
     ".prettierrc": "Wjson",
     "*.css": "css",
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "new": "cpp"
   }
 }

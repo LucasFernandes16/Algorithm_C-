@@ -23,11 +23,11 @@ private:
             int v = H[k];
             bool heap = false;
             while (!heap && (2 * k) <= n) {
-                int j = 2 * k; // posição do primeiro filho
-                if (j < n && H[j] > H[j + 1]) { // max heap
-                    j = j + 1; // encontra o maior filho
+                int j = 2 * k;
+                if (j < n && H[j] > H[j + 1]) {
+                    j = j + 1;
                 }
-                if (v <= H[j]) { // maxheap
+                if (v <= H[j]) {
                     heap = true;
                 } else {
                     H[k] = H[j];
@@ -68,24 +68,12 @@ public:
     }
     
     void add(int E) {
-        int v = E;
-        int k = n + 1;
-        bool heap = false;
-
-        while (!heap && k > 1) {
-          int j = k / 2;
-          if (H[j] < v) {
-            H[k] = H[j];
-          } else {
-            H[k] = v;
-            heap = true;
-          }
-          k = j;
+        int k = ++ n;
+        while (k > 1 && H[k / 2] > E) {
+            H[k] = H[k / 2];
+            k = k/2;
         }
-        if (!heap) {
-          H[k] = v;
-        }
-        n++;
+        H[k] = E;
     }
 
     int pop() {
