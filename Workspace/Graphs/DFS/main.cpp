@@ -71,7 +71,7 @@ public:
         while (!Q.empty()) {
             int v = Q.front();
             Q.pop();
-            cout << v << " ";
+            preVisit(v);
             int w = first(v);
             while (w < numVertex) {
                 if (getMark(w) == "UNVISITED") {
