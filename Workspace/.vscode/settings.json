@@ -17,6 +17,7 @@
     "span": "cpp",
     "text_encoding": "cpp",
     "random": "cpp",
-    "iostream": "cpp"
+    "iostream": "cpp",
+    "ostream": "cpp"
   }
 }
