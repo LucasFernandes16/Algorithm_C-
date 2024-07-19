@@ -98,7 +98,7 @@ public:
         priority_queue<Triple, vector<Triple>, Greater> H;
         H.push(Triple(0, s, s));
         D[s] = 0;
-        for (int i = 0; i < numVertex - 1; i++) {
+        for (int i = 0; i < numVertex; i++) {
             do {
                 if(H.empty()) return; // Corrigir: Verificar se a fila está vazia antes de acessar o topo
                 Triple min_element = H.top();
@@ -112,7 +112,7 @@ public:
             while (w < numVertex) {
                 if (getMark(w) != "VISITED" && D[w] > D[v] + weight(v, w)) {
                     D[w] = D[v] + weight(v, w);
-                    H.push(Triple(D[w], w, v));
+                    H.push(Triple(D[w], v, w));
                 }
                 w = next(v, w);
             }
@@ -143,6 +143,5 @@ int main() {
             cout << D[t] << endl;
         }
     }
-
     return 0;
 }
