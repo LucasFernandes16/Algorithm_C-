@@ -68,16 +68,15 @@ public:
         return INT_MAX; // Retornar infinito se não houver aresta
     }
 
-    void Dijkstra(int s, vector<int>& D) {
-        vector<int> P(numVertex, -1);
+    void Prim(vector<int>& D, vector<int>& V) {
         int v, p, w;
         for (int i = 0; i < numVertex; i++) {
             D[i] = INT_MAX;
             setMark(i, "UNVISITED");
         }
         priority_queue<Triple, vector<Triple>, Greater> H;
-        H.push(Triple(0, s, s));
-        D[s] = 0;
+        H.push(Triple(0, 0, 0));
+        D[0] = 0;
 
         // Usando o loop for com a condição de parada
         for (int i = 0; i < numVertex - 1; i++) {
@@ -91,14 +90,14 @@ public:
             } while (getMark(v) != "UNVISITED");
 
             setMark(v, "VISITED");
-            P[v] = p;
+            V[v] = p;
 
            
             for (const auto& edge : adjList[v]) {
                 w = edge.first;
                 int edgeWeight = edge.second;
-                if (getMark(w) != "VISITED" && D[w] > D[v] + edgeWeight) {
-                    D[w] = D[v] + edgeWeight;
+                if (getMark(w) != "VISITED" && D[w] > edgeWeight) {
+                    D[w] = edgeWeight;
                     H.push(Triple(D[w], w, v));
                 }
             }
@@ -107,27 +106,21 @@ public:
 };
 
 int main() {
-    int cases, n, m, s, t;
-    // n = numVertex, m = numEdges, s = vértice de origem, t = vértice de chegada
-    // grafo é não direcionado
-    int a1, a2, p; // variáveis para a inserção das arestas no grafo
-
-    cin >> cases;
-    for (int i = 0; i < cases; i++) {
-        cin >> n >> m >> s >> t;
-        Graph g(n);
-        for (int j = 0; j < m; j++) {
-            cin >> a1 >> a2 >> p;
-            g.setEdge(a1, a2, p);
-        }
-        vector<int> D(n);
-        g.Dijkstra(s, D);
-        cout << "Case #" << i + 1 << ": ";
-        if(D[t] == INT_MAX) {
-            cout << "unreachable" << endl;
-        } else {
-            cout << D[t] << endl;
-        }
+    int n,m,c1,c2,d;
+    while(cin >> n >> m){
+      if(n == 0 && m == 0){break;}
+      Graph g(n);
+      for(int i = 0; i < m ; i++){
+        cin >> c1 >> c2 >> d;
+        g.setEdge(c1,c2,d);
+      }
+      vector<int> D(n);
+      vector<int> V(n);
+      g.Prim(D,V);
+      int s = *max_element(D.begin(),D.end());
+      if(s == INT_MAX){cout << "IMPOSSIBLE"<< endl;}
+      else{cout << s << endl;}
     }
+    
     return 0;
 }
