@@ -4,6 +4,10 @@
     ".prettierrc": "Wjson",
     "*.css": "css",
     "iostream": "cpp",
-    "new": "cpp"
+    "new": "cpp",
+    "chrono": "cpp",
+    "text_encoding": "cpp",
+    "typeindex": "cpp",
+    "typeinfo": "cpp"
   }
 }
