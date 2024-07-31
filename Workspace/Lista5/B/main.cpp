@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
   #include <bits/stdc++.h>
   using namespace std;
   #define ll long long;
@@ -104,3 +105,116 @@
     g.toposort(0,s);
     return 0;
   }
+=======
+#include <bits/stdc++.h>
+using namespace std;
+
+class Graph {
+private:
+    vector<vector<int>> adjList;
+    vector<bool> visited;
+    vector<int> result;
+    vector<int> indegree;
+    int numVertex;
+    bool op;
+
+    void create_graph(int n) {
+        adjList.resize(n);
+        visited.resize(n, false);
+        indegree.resize(n, 0);
+        numVertex = n;
+        op = true;
+    }
+
+    void clear_graph() {
+        adjList.clear();
+        visited.clear();
+        result.clear();
+        indegree.clear();
+        numVertex = 0;
+        op = false;
+    }
+
+    void dfs(int u) {
+        visited[u] = true;
+
+        for (int v : adjList[u]) {
+            if (!visited[v]) {
+                dfs(v);
+            }
+        }
+        result.push_back(u);
+    }
+
+public:
+    Graph(int n) {
+        create_graph(n);
+    }
+
+    ~Graph() {
+        clear_graph();
+    }
+
+    void addEdge(int u, int v) {
+        adjList[u].push_back(v);
+        indegree[v]++;
+    }
+
+    void topologicalSort() {
+        priority_queue<int, vector<int>, greater<int>> pq;
+
+        for (int i = 0; i < numVertex; i++) {
+            if (indegree[i] == 0) {
+                pq.push(i);
+            }
+        }
+
+        while (!pq.empty()) {
+            int u = pq.top();
+            pq.pop();
+            result.push_back(u);
+
+            for (int v : adjList[u]) {
+                indegree[v]--;
+                if (indegree[v] == 0) {
+                    pq.push(v);
+                }
+            }
+        }
+
+        if (result.size() != numVertex) {
+            op = false;
+        }
+    }
+
+    void printResult() {
+        if (!op) {
+            cout << "Sandro fails." << endl;
+        } else {
+            for (int i = 0; i < result.size(); i++) {
+                if (i != 0) cout << " ";
+                cout << result[i] + 1;
+            }
+            cout << endl;
+        }
+    }
+};
+
+int main() {
+    int n, m;
+    cin >> n >> m;
+
+    Graph g(n);
+
+    for (int i = 0; i < m; i++) {
+        int x, y;
+        cin >> x >> y;
+        g.addEdge(x - 1, y - 1); 
+    }
+
+    g.topologicalSort();
+    g.printResult();
+
+    return 0;
+}
+>>>>>>> Stashed changes

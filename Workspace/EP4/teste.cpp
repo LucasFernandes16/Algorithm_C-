@@ -17,5 +17,20 @@ template <typename Key, typename E>
 class AVL{
   private:
     NODE* root;
-    int nodecount
+    int nodecount;
+
+  void create_avl(){
+    root = NULL;
+    nodecount = 0;
+  }
+
+  void clear_avl(NODE* rt){
+    if(rt!= NULL){
+      clear_avl(rt->left);
+      clear_avl(rt->right);
+      delete rt;
+    }
+
+    
+  }
 }
