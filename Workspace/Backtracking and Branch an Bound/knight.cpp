@@ -1,14 +1,29 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-<<<<<<< HEAD
-int main(){
-  
+int control_x[4] = {1, -1, 0, 0};
+int control_y[4] = {0 ,0, 1 ,-1};
 
-  return 0;
-=======
-bool backtrack(int n, int m, vector<vector<char>>& maze, int start_row, int start_col, int j){
-  if(start_row < 1 or start_row >= n && j < 1 or j > m and )
+bool backtrack(int n, int m, vector<vector<char>>& maze, int start_row, int start_col, int j, int cnt){
+  if(start_row < 1 or start_row >= n && j < 1 or j > m or cnt > j){
+    return false;
+  }
+  if (maze[start_row][start_col == 'x']){
+    return (cnt == j);
+  }
+  char temp = maze[start_row][start_col];
+  maze[start_row][start_col] = '#';
+
+  for(int step = 0; step < 4; step++){
+    int next_r = start_row + control_x[step];
+    int next_c = start_col + control_y[step];
+
+    if (backtrack(n,m,maze,next_r, next_c,j,cnt)){
+      return true;
+    }
+  }
+  maze[start_row][start_col] = temp;
+  return false;
 
 }
 
@@ -30,5 +45,9 @@ int main(){
       }
     }
   }
->>>>>>> a684fe28e552ef2b95c1dbf24feb20d84dfcdc42
+  if(backtrack(n,m,maze,start_row,start_col,j,0)){
+    cout << "SUCESS";
+  }else{
+    cout << "IMPOSSIBLE";
+  }
 }
