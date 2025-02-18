@@ -10,6 +10,27 @@ int dp_fibonacci(int n){
   }
 }
 
+
+int ChangeMaking(vector<int>& D, int n) {
+    int m = D.size();
+    vector<int> F(n + 1, INT_MAX); // Inicializa F com INT_MAX
+    F[0] = 0;
+
+    for (int i = 1; i <= n; ++i) {
+        int temp = INT_MAX;
+        for (int j = 0; j < m; ++j) {
+            if (i >= D[j]) {
+                temp = min(F[i - D[j]], temp);
+            }
+        }
+        F[i] = temp + 1;
+    }
+
+    return F[n];
+}
+
+
+
 int coinRowProblem(vector<int>& C) {
     int n = C.size();
     if (n == 0) return 0;
