@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <utility>
 
 using namespace std;
 
@@ -48,54 +49,90 @@ class Queue{
 
   public:
     Queue(){create_queue();}
-    ~Queue(){clear_queue(); delete front; }
-
-    void enqueue(E it, string side){
-      rear->next = create_node(it,side , NULL);
-      rear = rear->next;
-      size++;
-      cout << rear->element << rear->side;
+    ~Queue(){
+      clear_queue();
+      delete front;
     }
 
-    void dequeue(){
+    void enqueue(E it, string side){
+      rear->next = create_node(it,side,NULL);
+      rear = rear->next;
+      size++;
+    }
+
+    pair<E, string> dequeue(){
       if(size == 0){
-        cout << "The queue is empty";
+        throw std::runtime_error("The queue is empty"); // Lança uma exceção se a fila estiver vazia
       }
       Node<E>* temp = front->next;
-      E it = front->next->element;
-      string side = front->next->side;
-      front->next = front->next->next;
+      E element = temp->element;
+      string side = temp->side;
+      front->next = temp->next;
       if(front->next == NULL){
         rear = front;
       }
       size--;
       delete temp;
+      return make_pair(element, side); // Retorna um par (element, side)
     }
 
+    bool is_empty() const {
+      return size == 0;
+    }
+
+    int carsize(){
+      return front->element;
+    }
+    string car_arrive(){
+      return front->side;
+    }
 };
 
-void solve(Queue<int>, bool leftside){
-    
+
+void solve(Queue<int>& ferry, string ferryside,int count,int l){
+  int capacity = 0;
+  while (!ferry.is_empty())
+  {
+    if(ferryside == ferry.car_arrive()){
+      while (capacity <= l && ferry.car_arrive() == ferryside)
+      {
+        auto car = ferry.dequeue();
+        capacity += car.first;
+      }
+      count ++;
+      capacity = 0;
+      ferryside = (ferryside == "left") ? "right" : "left"; // Alterna o lado da balsa
+    }else{
+      while (capacity <= l && ferry.car_arrive() == ferryside)
+      {
+        capacity += ferry.carsize();
+        cout << ferry.dequeue().first << " "<<ferry.dequeue().second << endl;
+      }
+      count++;
+      ferryside = (ferryside == "left") ? "right" : "left"; // Alterna o lado da balsa
+    }
+  }
+  cout << count;
 }
 
 int main(){
-
     int count = 0;
-    bool leftside = true;
-    int c,l,m,boat_size;
+    string ferryside = "left";
+    int c, l, m, boat_size;
     string side;
 
     cin >> c;
     for(int i = 0; i < c ; i++){
-        cin >> l >> m;
-        Queue<int> ferry;
-        for(int j = 0 ; j < c; j++){
-            cin >> boat_size >> side;
-            ferry.enqueue(boat_size,side);
-        }
-        solve(ferry,leftside);
+      cin >> l >> m;
+      Queue<int> ferry;
+      for(int j = 0 ; j < m; j++){
+          cin >> boat_size >> side;
+          ferry.enqueue((boat_size/100), side);
+          cout << j << endl;
+      }
+      solve(ferry,ferryside,count,l);
+      cout << i << "solved" << endl;
     }
-
-        
+    cout << "end";
     return 0;
 }
