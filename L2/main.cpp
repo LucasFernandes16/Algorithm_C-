@@ -3,6 +3,7 @@
 #include <list>
 #include <string>
 #include <vector>
+#include <sstream>
 
 using namespace std;
 
@@ -20,7 +21,7 @@ private:
     vector<list<pair<Key, E>>> H;
 
 public:
-    Dictionary(int size = 100000) {
+    Dictionary(int size = 10) {
         m = size;
         cnt = 0;
         H.resize(m);
@@ -40,7 +41,7 @@ public:
     void insert(Key k, E element) {
         int pos = HashFunc(k, m);
         for (const auto &it : H[pos]) {
-            if (it.first == k) return; // Evita duplicatas
+            if (it.first == k) return; 
         }
         H[pos].emplace_back(k, element);
         cnt++;
@@ -59,17 +60,19 @@ public:
 
 int main() {
     Dictionary<string, string> dict;
-    string english, foreign, word;
+    string line;
 
     // Leitura do dicionário
-    while (true) {
-        getline(cin, english, ' ');
-        if (english.empty()) break; // Para quando encontra uma linha em branco
-        getline(cin, foreign);
+    while (getline(cin, line)) {
+        if (line.empty()) break; // Para quando encontra uma linha em branco
+        stringstream ss(line);
+        string english, foreign;
+        ss >> english >> foreign;
         dict.insert(foreign, english);
     }
 
     // Leitura e tradução da mensagem
+    string word;
     while (cin >> word) {
         string translation;
         if (dict.find(word, translation)) {

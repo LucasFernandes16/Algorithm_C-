@@ -94,28 +94,22 @@ class Queue {
     }
 };
 
-void solve(Queue<pair<int, string>>& left_queue, Queue<pair<int, string>>& right_queue, int l) {
+void solve(Queue<pair<int, string>>& ferry, string ferryside, int l) {
     int count = 0;
-    string ferryside = "left"; // A balsa começa no lado esquerdo
     int capacity = 0;
 
-    while (!left_queue.is_empty() || !right_queue.is_empty()) {
-        if (ferryside == "left") {
-            capacity = 0;
-            while (!left_queue.is_empty() && capacity + left_queue.carsize() <= l) {
-                auto car = left_queue.dequeue();
+    while (!ferry.is_empty()) {
+        if (ferryside == ferry.car_arrive()) {
+            while (!ferry.is_empty() && ferry.car_arrive() == ferryside && capacity + ferry.carsize() <= l) {
+                auto car = ferry.dequeue();
                 capacity += car.first;
             }
             count++;
-            ferryside = "right"; // Alterna para o lado direito
+            capacity = 0;
+            ferryside = (ferryside == "left") ? "right" : "left"; // Alterna o lado da balsa
         } else {
-            capacity = 0;
-            while (!right_queue.is_empty() && capacity + right_queue.carsize() <= l) {
-                auto car = right_queue.dequeue();
-                capacity += car.first;
-            }
             count++;
-            ferryside = "left"; // Alterna para o lado esquerdo
+            ferryside = (ferryside == "left") ? "right" : "left"; // Alterna o lado da balsa
         }
     }
     cout << count << endl;
@@ -129,16 +123,12 @@ int main() {
     cin >> c;
     for (int i = 0; i < c; i++) {
         cin >> l >> m;
-        Queue<pair<int, string>> left_queue, right_queue;
+        Queue<pair<int, string>> ferry;
         for (int j = 0; j < m; j++) {
             cin >> boat_size >> side;
-            if (side == "left") {
-                left_queue.enqueue(make_pair(boat_size, side));
-            } else {
-                right_queue.enqueue(make_pair(boat_size, side));
-            }
+            ferry.enqueue(make_pair(boat_size, side));
         }
-        solve(left_queue, right_queue, l * 100); // Converte o tamanho da balsa para centímetros
+        solve(ferry, "left", l * 100);
     }
     return 0;
 }

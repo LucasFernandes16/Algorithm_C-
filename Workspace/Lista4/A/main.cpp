@@ -1,5 +1,4 @@
 #include <iostream>
-<<<<<<< Updated upstream
 #include <algorithm>
 
 using namespace std;
@@ -8,7 +7,6 @@ template <typename Key, typename E>
 class BSTNODE {
 public:
     int size;
-=======
 #include <string>
 
 using namespace std;
@@ -16,13 +14,11 @@ using namespace std;
 template <typename Key,typename E>
 class BSTNODE{
   public:
->>>>>>> Stashed changes
     int height;
     Key key;
     BSTNODE* left;
     BSTNODE* right;
     E element;
-<<<<<<< Updated upstream
 };
 
 template <typename Key, typename E>
@@ -186,7 +182,6 @@ int main() {
     }
     return 0;
 }
-=======
     
 };
 
@@ -329,4 +324,3 @@ int main(){
   }
   return 0;
 }
->>>>>>> Stashed changes
